@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Voice AI Agents Portfolio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf3 100%);
+    color: #1a1a2e;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+  header { text-align: center; margin-bottom: 60px; }
+  header h1 { font-size: 2.5rem; margin-bottom: 12px; color: #1a1a2e; }
+  header p { font-size: 1.1rem; color: #555; max-width: 640px; margin: 0 auto; }
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .agent-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .agent-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  }
+  .agent-card .icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .agent-card h2 { font-size: 1.4rem; margin-bottom: 8px; color: #1a1a2e; }
+  .agent-card .role { color: #6b7280; font-size: 0.95rem; margin-bottom: 16px; font-weight: 500; }
+  .agent-card p.description { color: #4b5563; font-size: 0.95rem; margin-bottom: 16px; flex-grow: 1; }
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+  .tag {
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .call-btn {
+    width: 100%;
+    background: #1a1a2e;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .call-btn:hover:not(:disabled) { background: #2d2d4d; }
+  .call-btn.in-call { background: #dc2626; }
+  .call-btn.in-call:hover { background: #b91c1c; }
+  .call-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .status {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #6b7280;
+    min-height: 18px;
+  }
+  .about-section {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .about-section h2 { margin-bottom: 16px; color: #1a1a2e; font-size: 1.4rem; }
+  .about-section p { color: #4b5563; margin-bottom: 12px; }
+  footer {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9rem;
+    padding-top: 40px;
+    border-top: 1px solid #e5e7eb;
+  }
+  footer a { color: #4f46e5; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    header h1 { font-size: 2rem; }
+    .container { padding: 40px 16px; }
+    .about-section { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Voice AI Agents Portfolio</h1>
+      <p>Three production-grade voice agents built on Retell AI, demonstrating receptionist automation, outbound sales qualification with CRM integration, and knowledge-base-driven customer support.</p>
+    </header>
+
+    <div class="about-section">
+      <h2>About this portfolio</h2>
+      <p>Each agent below is a fully functional voice AI built using Retell AI as the voice platform, GPT-4.1 / GPT-4.1 Mini as the language model, and integrated with real backend systems (Cal.com, Airtable, n8n, custom knowledge bases) to perform actual tasks, not just hold demo conversations.</p>
+      <p>Click any "Try" button below to talk to the agent live in your browser. You will need to allow microphone access.</p>
+    </div>
+
+    <div class="agents-grid">
+
+      <div class="agent-card">
+        <div class="icon">🦷</div>
+        <h2>Sophia</h2>
+        <div class="role">Dental Clinic Receptionist (Inbound)</div>
+        <p class="description">Handles inbound patient calls for a dental clinic. Answers FAQs about hours, services, insurance, and pricing. Books new patient appointments via Cal.com integration. Triages dental emergencies with the right urgency.</p>
+        <div class="tech-tags">
+          <span class="tag">Single-prompt</span>
+          <span class="tag">GPT-4.1</span>
+          <span class="tag">Cal.com</span>
+          <span class="tag">Function calling</span>
+        </div>
+        <button class="call-btn" data-agent="sophia">Try Sophia</button>
+        <div class="status" id="status-sophia"></div>
+      </div>
+
+      <div class="agent-card">
+        <div class="icon">📊</div>
+        <h2>Brian</h2>
+        <div class="role">SaaS Sales Qualifier (Outbound)</div>
+        <p class="description">Outbound sales development representative for a SaaS product. Conducts BANT qualification (Budget, Authority, Need, Timeline) across a multi-node conversation flow. Logs every lead to an Airtable CRM via n8n webhook in real time.</p>
+        <div class="tech-tags">
+          <span class="tag">Conversation Flow</span>
+          <span class="tag">GPT-4.1</span>
+          <span class="tag">n8n</span>
+          <span class="tag">Airtable</span>
+          <span class="tag">Webhooks</span>
+        </div>
+        <button class="call-btn" data-agent="brian">Try Brian</button>
+        <div class="status" id="status-brian"></div>
+      </div>
+
+      <div class="agent-card">
+        <div class="icon">🛍️</div>
+        <h2>Lily</h2>
+        <div class="role">E-commerce Customer Support (Inbound)</div>
+        <p class="description">Customer support agent for an online children's clothing shop. Uses a knowledge base to answer product, sizing, shipping, and returns questions. Escalates order-specific and complex issues to the human team via WhatsApp.</p>
+        <div class="tech-tags">
+          <span class="tag">Single-prompt</span>
+          <span class="tag">GPT-4.1 Mini</span>
+          <span class="tag">Knowledge Base</span>
+          <span class="tag">RAG</span>
+        </div>
+        <button class="call-btn" data-agent="lily">Try Lily</button>
+        <div class="status" id="status-lily"></div>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Built by Zain Raza · <a href="https://github.com/zainrazabangash" target="_blank">GitHub</a> · <a href="mailto:muhzainraza@gmail.com">Email</a></p>
+    </footer>
+  </div>
+
+<script type="module">
+  import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk";
+
+  // ===== CONFIGURATION =====
+
+  const AGENT_IDS = {
+    sophia: "agent_b5fb7f4aacadb1fe059aa783ba",
+    brian:  "agent_e45887308aaa814b0c27f050ce",
+    lily:   "agent_f10f97a44cd6e8baa29a6ce4a4"
+  };
+
+  // Replace this with your Vercel deployment URL after deploying the get-token function.
+  // Example: "https://my-portfolio-tokens.vercel.app"
+  const VERCEL_API_URL = "REPLACE_WITH_YOUR_VERCEL_URL";
+  // =========================
+
+  const client = new RetellWebClient();
+  let currentAgent = null;
+
+  client.on("call_started", () => {
+    if (currentAgent) updateStatus(currentAgent, "Call in progress. Talk to the agent.");
+  });
+
+  client.on("call_ended", () => {
+    if (currentAgent) {
+      const btn = document.querySelector(`[data-agent="${currentAgent}"]`);
+      btn.textContent = `Try ${capitalize(currentAgent)}`;
+      btn.classList.remove("in-call");
+      updateStatus(currentAgent, "Call ended.");
+      currentAgent = null;
+    }
+    enableAllButtons();
+  });
+
+  client.on("error", (err) => {
+    if (currentAgent) {
+      updateStatus(currentAgent, `Error: ${err.message || err}`);
+      const btn = document.querySelector(`[data-agent="${currentAgent}"]`);
+      btn.textContent = `Try ${capitalize(currentAgent)}`;
+      btn.classList.remove("in-call");
+      currentAgent = null;
+    }
+    enableAllButtons();
+    console.error(err);
+  });
+
+  document.querySelectorAll(".call-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const agent = btn.dataset.agent;
+
+      // If clicking the agent currently on a call, hang up.
+      if (currentAgent === agent) {
+        await client.stopCall();
+        return;
+      }
+
+      // If another agent is on a call, end it first.
+      if (currentAgent && currentAgent !== agent) {
+        await client.stopCall();
+      }
+
+      const agentId = AGENT_IDS[agent];
+      if (!agentId || agentId.startsWith("REPLACE_WITH")) {
+        updateStatus(agent, "Agent ID not configured.");
+        return;
+      }
+
+      try {
+        disableAllButtons();
+        updateStatus(agent, "Getting access token...");
+
+        const tokenRes = await fetch(`${VERCEL_API_URL}/api/get-token?agent_id=${agentId}`);
+        if (!tokenRes.ok) {
+          const errText = await tokenRes.text();
+          throw new Error(`Token request failed: ${errText}`);
+        }
+        const tokenData = await tokenRes.json();
+        if (!tokenData.access_token) {
+          throw new Error(tokenData.error || "No access token received");
+        }
+
+        updateStatus(agent, "Connecting...");
+        await client.startCall({ accessToken: tokenData.access_token });
+
+        currentAgent = agent;
+        btn.textContent = "End Call";
+        btn.classList.add("in-call");
+        btn.disabled = false; // re-enable so user can hang up
+      } catch (err) {
+        updateStatus(agent, `Could not start call: ${err.message || err}`);
+        console.error(err);
+        enableAllButtons();
+      }
+    });
+  });
+
+  function updateStatus(agent, text) {
+    const el = document.getElementById(`status-${agent}`);
+    if (el) el.textContent = text;
+  }
+
+  function capitalize(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function disableAllButtons() {
+    document.querySelectorAll(".call-btn").forEach(b => b.disabled = true);
+  }
+
+  function enableAllButtons() {
+    document.querySelectorAll(".call-btn").forEach(b => b.disabled = false);
+  }
+</script>
+</body>
+</html>
